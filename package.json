@@ -1,0 +1,24 @@
+{
+  "name": "reql-then",
+  "version": "0.0.1",
+  "description": "Promisify ReQL queries",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "keywords": [
+    "rethinkdb",
+    "reql",
+    "nosql",
+    "promise",
+    "promises"
+  ],
+  "author": "Zaim Bakar <abuzaim12@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "debug": "~0.7.4",
+    "generic-pool": "~2.0.4",
+    "bluebird": "~0.11.5-1",
+    "rethinkdb": "~1.11.0-1"
+  }
+}
