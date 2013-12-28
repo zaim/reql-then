@@ -6,7 +6,9 @@ Uses the [bluebird](https://github.com/petkaantonov/bluebird) promise library.
 
 ## Install
 
+```
 npm install --save rethinkdb reql-then
+```
 
 ## Usage
 
@@ -47,5 +49,5 @@ $ npm test
 Enable debugging messages (assuming `server.js` uses `reql-then`):
 
 ```
-DEBUG=reql-then node server.js
+$ DEBUG=reql-then node server.js
 ```
