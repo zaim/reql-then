@@ -1,6 +1,6 @@
 {
   "name": "reql-then",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Promisify ReQL queries",
   "main": "index.js",
   "scripts": {
