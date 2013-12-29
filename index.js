@@ -67,6 +67,12 @@ function connect (config) {
     });
   };
 
+  reql.lazy = function (query) {
+    return function () {
+      return reql(query);
+    };
+  };
+
   reql.close = function () {
     var drain = Promise.promisify(pool.drain, pool);
     debug('closing: %s', key);
