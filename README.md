@@ -19,11 +19,11 @@ var connect = require('reql-then')
       port: 28015,
       db: 'test',
       authKey: '',
-      maxPoolSize: 10
+      maxPoolSize: 10  // set to 1 to disable connection pooling
     });
 
-// Make a query
-var query = r.db('MiddleEarth').table('Wizards').get('Gandalf').update({'colour': 'White'});
+// Run a query
+var query = r.db('MiddleEarth').table('Wizards').get('Gandalf').update({colour: 'White'});
 reql(query).then(function (result) {
   // handle result
 }).error(function (err) {
@@ -31,6 +31,13 @@ reql(query).then(function (result) {
 }).catch(function (err) {
   // handle exception
 });
+
+// Make lazy query functions
+var beans = r.table('counter').get('beans')
+  , add = reql.lazy(beans.update({count: r.row('count').add(1) }))
+  , mul = reql.lazy(beans.update({count: r.row('count').mul(2) }))
+  , sub = reql.lazy(beans.update({count: r.row('count').sub(3) }));
+add().then(mul).then(sub);
 
 // Disconnect
 reql.close().then(function () {
@@ -40,9 +47,12 @@ reql.close().then(function () {
 
 ## Testing
 
-Run tests:
+Testing uses the [mocha](http://visionmedia.github.io/mocha/) framework.
+A RethinkDB test server needs to be running at `localhost:28015`:
 
 ```
+$ npm install -g mocha
+$ rethinkdb --directory test &
 $ npm test
 ```
 
