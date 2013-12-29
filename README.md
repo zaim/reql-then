@@ -13,7 +13,8 @@ npm install --save rethinkdb reql-then
 ## Usage
 
 ```javascript
-var connect = require('reql-then')
+var r = require('rethinkdb')
+  , connect = require('reql-then')
   , reql = connect({
       host: 'localhost',
       port: 28015,
