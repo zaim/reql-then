@@ -1,11 +1,11 @@
 var r = require('rethinkdb')
-  , debug = require('debug')('reql-then')
+  , debug = require('debug')('reql-then:main')
+  , timing = require('debug')('reql-then:timing')
   , Pool = require('generic-pool').Pool
   , Promise = require('bluebird');
 
 
 var pools = {};
-
 
 function connectionKey (conn) {
   return conn.host + ':' + conn.port;
@@ -20,6 +20,7 @@ function validateConfig (config) {
   }
   config.host = config.host || 'localhost';
   config.port = config.port || 28015;
+  config.minReportTime = config.minReport || process.env.MIN_REPORT_TIME || 10000; /* Report timing after 10 seconds */
   return config;
 }
 
@@ -60,10 +61,20 @@ function connect (config) {
     debug('acquiring: %s', key);
     return acquire().then(function (conn) {
       debug('acquired: %s', connectionKey(conn));
-      return run(conn).finally(function () {
-        debug('releasing: %s', connectionKey(conn));
-        pool.release(conn);
-      });
+      var start = new Date();
+      return run(conn)
+        .then(function(result) {
+          var end = new Date();
+          var total = end-start;
+          if (total >= config.minReportTime) {
+            timing('Query ' + query.toString() + ' took ' + total + 'ms');
+          }
+          return result;
+        })
+        .finally(function () {
+          debug('releasing: %s', connectionKey(conn));
+          pool.release(conn);
+        });
     });
   };
 
