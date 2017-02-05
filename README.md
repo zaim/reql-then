@@ -48,7 +48,7 @@ reql.close().then(function () {
 
 ## Testing
 
-Testing uses the [mocha](http://visionmedia.github.io/mocha/) framework.
+Testing uses the [mocha](http://mochajs.org/) framework.
 A RethinkDB test server needs to be running at `localhost:28015`:
 
 ```
